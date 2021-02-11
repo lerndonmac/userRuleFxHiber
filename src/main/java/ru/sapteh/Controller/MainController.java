@@ -70,7 +70,6 @@ public class MainController {
 
         userDeleteButton.setOnAction(actionEvent -> {
             factory =  new Configuration().configure().buildSessionFactory();
-            initDataBase();
             DAO<User,Integer> userDAO = new UserDAOimpl(factory);
             assert user != null;
             userDAO.delete(user);
