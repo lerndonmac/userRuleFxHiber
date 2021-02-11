@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.Controller.User.CreateController">
+   <children>
+      <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" />
+      <Text layoutX="14.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName" />
+      <TextField fx:id="fNText" layoutX="128.0" layoutY="23.0" />
+      <TextField fx:id="lNText" layoutX="128.0" layoutY="64.0" />
+      <Button fx:id="createButton" layoutX="424.0" layoutY="164.0" mnemonicParsing="false" text="Create" />
+   </children>
+</Pane>

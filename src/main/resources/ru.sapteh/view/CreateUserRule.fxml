@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="190.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.Controller.CreateUserRuleController">
+   <children>
+      <ComboBox fx:id="userCombo" layoutX="14.0" layoutY="14.0" prefWidth="150.0" />
+      <DatePicker fx:id="regDatePicker" layoutX="219.0" layoutY="14.0" />
+      <ComboBox fx:id="ruleCombo" layoutX="14.0" layoutY="102.0" prefWidth="150.0" />
+      <Text layoutX="14.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" />
+      <Text layoutX="14.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule" />
+      <Text layoutX="402.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date Of Registration" />
+      <Button fx:id="createButton" layoutX="306.0" layoutY="102.0" mnemonicParsing="false" text="create" />
+   </children>
+</Pane>

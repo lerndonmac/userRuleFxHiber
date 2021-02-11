@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="138.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.Controller.User.UpdateController">
+   <children>
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FirstName" />
+      <Text layoutX="14.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LastName" />
+      <TextField fx:id="fNText" layoutX="100.0" layoutY="10.0" prefHeight="25.0" prefWidth="260.0" />
+      <TextField fx:id="lNTex" layoutX="100.0" layoutY="87.0" prefHeight="25.0" prefWidth="260.0" />
+      <Button fx:id="updateButton" layoutX="374.0" layoutY="87.0" mnemonicParsing="false" text="обновить" />
+   </children>
+</Pane>
