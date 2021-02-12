@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import ru.sapteh.DAO.DAO;
 import ru.sapteh.DAO.impl.RuleDAOimpl;
 import ru.sapteh.DAO.impl.UserDAOimpl;
@@ -21,7 +22,6 @@ import ru.sapteh.model.User;
 import ru.sapteh.model.UserRule;
 
 
-import javax.persistence.Query;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -183,11 +183,8 @@ ObservableList<UserRule> userRulesForUserRulesObservable = FXCollections.observa
         RuleIdText.setText(String.valueOf(rule.getId()));
         ruleNameText.setText(rule.getRuleName());
         usersForRulesObservableList.clear();
-       String sql = "";
-        Session session = factory.openSession();
-        Query query = session.createNativeQuery(sql);
-        System.out.println(query.getResultList());
-        User userForList = new User();
+        UserRuleDAOimpl DAOUserRule = new UserRuleDAOimpl(factory);
+        usersForRulesObservableList.addAll(DAOUserRule.getUserListByRule(rule));
         ruleUsersCombo.setItems(usersForRulesObservableList);
     }
     public void initDateBaseRules(){

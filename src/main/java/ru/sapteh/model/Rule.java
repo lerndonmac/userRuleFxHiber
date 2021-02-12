@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Setter@Getter@NoArgsConstructor@RequiredArgsConstructor
+@Table(name = "rule")
 public class Rule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +22,5 @@ public class Rule {
     public String toString() {
         return ruleName;
     }
+
 }

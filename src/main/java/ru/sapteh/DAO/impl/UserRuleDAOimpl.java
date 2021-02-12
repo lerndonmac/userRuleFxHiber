@@ -5,8 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import ru.sapteh.DAO.DAO;
+import ru.sapteh.model.Rule;
+import ru.sapteh.model.User;
 import ru.sapteh.model.UserRule;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRuleDAOimpl implements DAO<UserRule,Integer> {
@@ -27,6 +30,19 @@ public class UserRuleDAOimpl implements DAO<UserRule,Integer> {
                 Hibernate.initialize(result.getUserId());
             }
             return result;
+        }
+    }
+    public List<User> getUserListByRule(Rule rule){
+        try (Session session = factory.openSession()){
+            List<User> users = new ArrayList<>();
+            Query<UserRule> query = session.createQuery("FROM UserRule where ruleId = ?1" , UserRule.class);
+            query.setParameter(1,rule);
+            List<UserRule> userRules = query.list();
+            factory.close();
+            for (UserRule userRule: userRules) {
+                users.add(userRule.getUserId());
+            }
+            return users ;
         }
     }
 

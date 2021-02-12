@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Entity
 @Getter@Setter@NoArgsConstructor@RequiredArgsConstructor
+@Table(name = "userrule")
 public class UserRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

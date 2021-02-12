@@ -65,4 +65,13 @@ public class RuleDAOimpl implements DAO<Rule,Integer> {
             session.getTransaction().commit();
         }
     }
+    public List<User> getUser(Rule rule){
+        try (Session session = factory.openSession()){
+            String hql = "";
+            Query result = session.createQuery(hql);
+            result.setParameter(1,rule);
+                System.out.println(result.getSingleResult());
+            return result.list();
+        }
+    }
 }
