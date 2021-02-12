@@ -52,7 +52,7 @@ public class CreateUserRuleController {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            date.setTime(date.getTime()+86400000);
+            date.setTime(date.getTime()+10800000);
             UserRule userRule = new UserRule(date,
                     userCombo.getValue(),ruleCombo.getValue());
             assert date!=null;

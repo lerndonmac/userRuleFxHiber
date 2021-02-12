@@ -35,6 +35,7 @@ public class RuleDAOimpl implements DAO<Rule,Integer> {
         try(Session session = factory.openSession()){
             Query<Rule> result = session.createQuery("FROM Rule");
             return result.list();
+
         }
     }
 

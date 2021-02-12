@@ -3,54 +3,106 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.Controller.MainController">
-  <tabs>
-    <Tab text="User">
-      <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-              <children>
-                  <TableView fx:id="tableUsersView" prefHeight="684.0" prefWidth="273.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
-                      <columns>
-                          <TableColumn fx:id="userFirstNameColumn" prefWidth="135.0" text="First Name" />
-                          <TableColumn fx:id="userLastNameColumn" prefWidth="137.0" text="Last Name">
-                          </TableColumn>
-                      </columns>
-                  </TableView>
-                  <Button fx:id="userDeleteButton" layoutX="1124.0" layoutY="660.0" mnemonicParsing="false" text="Delete" />
-                  <Button fx:id="userUpdateButton" layoutX="1045.0" layoutY="660.0" mnemonicParsing="false" text="Update" />
-                  <Button fx:id="UserCreateButton" layoutX="963.0" layoutY="660.0" mnemonicParsing="false" text="Create" />
-                  <Text layoutX="355.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
-                  <Text layoutX="355.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
-                  <Text layoutX="355.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
-                  <Text layoutX="355.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Date" />
-                  <Text layoutX="355.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rules" />
-                  <ComboBox fx:id="regDateBox" layoutX="681.0" layoutY="309.0" prefWidth="150.0" />
-                  <ComboBox fx:id="rulesBox" layoutX="681.0" layoutY="364.0" prefWidth="150.0" />
-                  <Label fx:id="idText" layoutX="728.0" layoutY="160.0" text="Label" />
-                  <Label fx:id="firstNameText" layoutX="728.0" layoutY="214.0" text="Label" />
-                  <Label fx:id="lastNameText" layoutX="728.0" layoutY="264.0" text="Label" />
-              </children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Rules">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-      <Tab text="User's rules">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="userRuleCreateButton" layoutX="90.0" layoutY="52.0" mnemonicParsing="false" text="create" />
-               </children></AnchorPane>
-        </content>
-      </Tab>
-  </tabs>
-</TabPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.sapteh.Controller.MainController">
+    <TabPane layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <tabs>
+            <Tab text="User">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="tableUsersView" prefHeight="684.0" prefWidth="273.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
+                                <columns>
+                                    <TableColumn fx:id="userFirstNameColumn" prefWidth="135.0" text="First Name" />
+                                    <TableColumn fx:id="userLastNameColumn" prefWidth="137.0" text="Last Name">
+                                    </TableColumn>
+                                </columns>
+                            </TableView>
+                            <Button fx:id="userDeleteButton" layoutX="1124.0" layoutY="660.0" mnemonicParsing="false" text="Delete" />
+                            <Button fx:id="userUpdateButton" layoutX="1045.0" layoutY="660.0" mnemonicParsing="false" text="Update" />
+                            <Button fx:id="UserCreateButton" layoutX="963.0" layoutY="660.0" mnemonicParsing="false" text="Create" />
+                            <Text layoutX="355.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+                            <Text layoutX="355.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
+                            <Text layoutX="355.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" />
+                            <Text layoutX="355.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Date" />
+                            <Text layoutX="355.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rules" />
+                            <ComboBox fx:id="regDateBox" layoutX="681.0" layoutY="309.0" prefWidth="150.0" />
+                            <ComboBox fx:id="rulesBox" layoutX="681.0" layoutY="364.0" prefWidth="150.0" />
+                            <Label fx:id="idText" layoutX="728.0" layoutY="160.0" text="Label" />
+                            <Label fx:id="firstNameText" layoutX="728.0" layoutY="214.0" text="Label" />
+                            <Label fx:id="lastNameText" layoutX="728.0" layoutY="264.0" text="Label" />
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="Rules">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="666.0" prefWidth="1200.0">
+                        <children>
+                            <TableView fx:id="tableRules" prefHeight="566.0" prefWidth="200.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
+                                <columns>
+                                    <TableColumn fx:id="columnRulesId" prefWidth="55.0" text="ID" />
+                                    <TableColumn fx:id="columnRulesName" prefWidth="144.0" text="Name" />
+                                </columns>
+                            </TableView>
+                            <Text layoutX="271.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+                            <Text layoutX="266.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule Name" />
+                            <Text layoutX="266.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Users" />
+                            <ComboBox fx:id="ruleUsersCombo" layoutX="350.0" layoutY="123.0" prefHeight="25.0" prefWidth="585.0" />
+                            <TextField fx:id="RuleIdText" layoutX="350.0" layoutY="37.0" prefHeight="25.0" prefWidth="583.0" />
+                            <TextField fx:id="ruleNameText" layoutX="350.0" layoutY="74.0" prefHeight="25.0" prefWidth="585.0" />
+                            <Button fx:id="createRuleButton" layoutX="766.0" layoutY="316.0" mnemonicParsing="false" text="Create" />
+                            <Button fx:id="updateRuleButton" layoutX="862.0" layoutY="316.0" mnemonicParsing="false" text="Update" />
+                            <Button fx:id="deleteRuleButton" layoutX="960.0" layoutY="316.0" mnemonicParsing="false" text="Delete" />
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="User's rules">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <Button fx:id="userRuleCreateButton" layoutX="859.0" layoutY="386.0" mnemonicParsing="false" text="Create" />
+                            <TableView fx:id="tableUserRule" prefHeight="465.0" prefWidth="358.0" AnchorPane.leftAnchor="1.0" AnchorPane.topAnchor="1.0">
+                                <columns>
+                                    <TableColumn fx:id="columnUserRuleId" prefWidth="36.0" text="ID" />
+                                    <TableColumn fx:id="columnUserRuleUser" prefWidth="133.0" text="User" />
+                                    <TableColumn fx:id="columnUserRuleRule" prefWidth="188.0" text="Date" />
+                                </columns>
+                            </TableView>
+                            <Button fx:id="userRuleUpdateButton" layoutX="939.0" layoutY="386.0" mnemonicParsing="false" text="Update" />
+                            <Button fx:id="userRuleDeleteButton" layoutX="1019.0" layoutY="386.0" mnemonicParsing="false" text="Delete" />
+                            <Text layoutX="416.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="id" />
+                            <Text layoutX="416.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User First Name" />
+                            <Text layoutX="416.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Last Name" />
+                            <Text layoutX="416.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rule Name" />
+                            <TextField fx:id="userRuleId" layoutX="526.0" layoutY="18.0" />
+                            <TextField fx:id="userRuleUserFirstName" layoutX="526.0" layoutY="76.0" />
+                            <TextField fx:id="userRuleUserLastName" layoutX="526.0" layoutY="139.0" />
+                            <TextField fx:id="userRuleRuleName" layoutX="526.0" layoutY="213.0" />
+                            <Text layoutX="416.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RegistrationDate" />
+                            <TextField fx:id="userRuleRegDate" layoutX="526.0" layoutY="268.0" />
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+   <MenuBar layoutY="2.0">
+     <menus>
+       <Menu mnemonicParsing="false" text="Window">
+         <items>
+           <MenuItem fx:id="MenuRefrash" mnemonicParsing="false" text="Refrash" />
+         </items>
+       </Menu>
+     </menus>
+   </MenuBar>
+</Pane>

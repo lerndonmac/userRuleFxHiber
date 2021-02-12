@@ -9,118 +9,215 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.sapteh.DAO.DAO;
+import ru.sapteh.DAO.impl.RuleDAOimpl;
 import ru.sapteh.DAO.impl.UserDAOimpl;
+import ru.sapteh.DAO.impl.UserRuleDAOimpl;
 import ru.sapteh.model.Rule;
 import ru.sapteh.model.User;
 import ru.sapteh.model.UserRule;
 
 
+import javax.persistence.Query;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 public class MainController {
-@FXML
+    public MenuItem MenuRefrash;
+    private SessionFactory factory;
+
+    //userRule
+    public TableView<UserRule> tableUserRule;
+    public TableColumn<UserRule,Integer> columnUserRuleId;
+    public TableColumn<UserRule,String> columnUserRuleUser;
+    public TableColumn<UserRule,String> columnUserRuleRule;
+    public Button userRuleUpdateButton;
+    public Button userRuleDeleteButton;
+    public TextField userRuleId;
+    public TextField userRuleUserFirstName;
+    public TextField userRuleUserLastName;
+    public TextField userRuleRuleName;
+    public TextField userRuleRegDate;
+    private UserRule userRuleForUserRule;
     public Button userRuleCreateButton;
-    private final ObservableList<User> userObservableList = FXCollections.observableArrayList();
-    private final ObservableList<Date> dateObservableList = FXCollections.observableArrayList();
-    private final ObservableList<Rule> ruleObservableList = FXCollections.observableArrayList();
+ObservableList<UserRule> userRulesForUserRulesObservable = FXCollections.observableArrayList();
 
-  private SessionFactory factory;
-  private User user;
-  private Rule rule;
-  private UserRule userRule;
+    //rules
+    public TableView<Rule> tableRules;
+    public TableColumn<Rule,Integer> columnRulesId;
+    public TableColumn<Rule,String> columnRulesName;
+    public ComboBox<User> ruleUsersCombo;
+    public TextField RuleIdText;
+    public TextField ruleNameText;
+    public Button createRuleButton;
+    public Button updateRuleButton;
+    public Button deleteRuleButton;
+    private final ObservableList<Rule> rulesForRulesObservableList = FXCollections.observableArrayList();
+    private final ObservableList<User> usersForRulesObservableList = FXCollections.observableArrayList();
 
-  @FXML
-    public TableView<User> tableUsersView;@FXML
-    public TableColumn<User,String> userFirstNameColumn;@FXML
-    public TableColumn<User,String> userLastNameColumn;@FXML
-    public Button userDeleteButton;@FXML
-    public Button userUpdateButton;@FXML
-    public Button UserCreateButton;@FXML
-    public ComboBox<Date> regDateBox;@FXML
-    public ComboBox<Rule> rulesBox;@FXML
-    public Label idText;@FXML
-    public Label firstNameText;@FXML
+  //user
+    private User userOfUser;
+    public TableView<User> tableUsersView;
+    public TableColumn<User,String> userFirstNameColumn;
+    public TableColumn<User,String> userLastNameColumn;
+    public Button userDeleteButton;
+    public Button userUpdateButton;
+    public Button UserCreateButton;
+    public ComboBox<Date> regDateBox;
+    public ComboBox<Rule> rulesBox;
+    public Label idText;
+    public Label firstNameText;
     public Label lastNameText;
-
-
+    private final ObservableList<Date> dateObservableList = FXCollections.observableArrayList();
+    private final ObservableList<Rule> ruleForUserObservableList = FXCollections.observableArrayList();
+    private final ObservableList<User> userObservableList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(){
-        UserCreateButton.setOnAction(actionEvent->{
-            Stage primaryStage = new Stage();
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/ru.sapteh/view/user/CreateWindow.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            primaryStage.setTitle("Create Window");
-            assert root != null;
-            primaryStage.setScene(new Scene(root));
-            primaryStage.showAndWait();
-        });
-        userUpdateButton.setOnAction(actionEvent ->{
+        //window
+        {
+            MenuRefrash.setOnAction(actionEvent -> {
+                usersForRulesObservableList.clear();
+                ruleForUserObservableList.clear();
+                userObservableList.clear();
+                rulesForRulesObservableList.clear();
+                usersForRulesObservableList.clear();
+                userRulesForUserRulesObservable.clear();
+                initialize();
+            });
+        }
+        //userRule
+        {
+            initDateBaseUserRule();
+            userRuleDeleteButton.setOnAction(actionEvent -> {
+                factory = new Configuration().configure().buildSessionFactory();
+                DAO<UserRule, Integer> DAOUserRule = new UserRuleDAOimpl(factory);
+                DAOUserRule.delete(userRuleForUserRule);
+            });
+            userRuleCreateButton.setOnAction(ActionEvent -> {
+                Stage primaryStage = new Stage();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/ru.sapteh/view/CreateUserRule.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                primaryStage.setTitle("Create Window");
+                assert root != null;
+                primaryStage.setScene(new Scene(root));
+                primaryStage.show();
 
-        } );
+            });
+            columnUserRuleId.setCellValueFactory(new PropertyValueFactory<UserRule, Integer>("id"));
+            columnUserRuleUser.setCellValueFactory(new PropertyValueFactory<UserRule, String>("userId"));
+            columnUserRuleRule.setCellValueFactory(new PropertyValueFactory<UserRule, String>("ruleId"));
+            tableUserRule.getSelectionModel().selectedItemProperty().addListener(((observable, oldUserRule, UserRule) -> selectedUserRule(UserRule)));
+            tableUserRule.setItems(userRulesForUserRulesObservable);
+        }
+        //user
+        {
+            initDataBaseUser();
+            UserCreateButton.setOnAction(actionEvent -> {
+                Stage primaryStage = new Stage();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/ru.sapteh/view/user/CreateWindow.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                primaryStage.setTitle("Create Window");
+                assert root != null;
+                primaryStage.setScene(new Scene(root));
+                primaryStage.showAndWait();
+            });
+            userUpdateButton.setOnAction(actionEvent -> {
 
-        userDeleteButton.setOnAction(actionEvent -> {
-            factory =  new Configuration().configure().buildSessionFactory();
-            DAO<User,Integer> userDAO = new UserDAOimpl(factory);
-            assert user != null;
-            userDAO.delete(user);
-        });
-
-        userRuleCreateButton.setOnAction(ActionEvent->{
-            Stage primaryStage = new Stage();
-            Parent root = null;
-            try {
-                root = FXMLLoader.load(getClass().getResource("/ru.sapteh/view/CreateUserRule.fxml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            primaryStage.setTitle("Create Window");
-            assert root != null;
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
-
-        });
-
-        factory =  new Configuration().configure().buildSessionFactory();
-        initDataBase();
-
-        tableUsersView.getSelectionModel().selectedItemProperty().addListener
-                ((observable,oldUser,user)-> selected(user));
-        userFirstNameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("firstName"));
-        userLastNameColumn.setCellValueFactory(new PropertyValueFactory<User,String>("lastName"));
-        tableUsersView.setItems(userObservableList);
-
-        regDateBox.setItems(dateObservableList);
+            });
+            userDeleteButton.setOnAction(actionEvent -> {
+                factory = new Configuration().configure().buildSessionFactory();
+                DAO<User, Integer> userDAO = new UserDAOimpl(factory);
+                assert userOfUser != null;
+                userDAO.delete(userOfUser);
+            });
+            tableUsersView.getSelectionModel().selectedItemProperty().addListener((observable, oldUser, user) -> selectedUser(user));
+            userFirstNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+            userLastNameColumn.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+            tableUsersView.setItems(userObservableList);
+            regDateBox.setItems(dateObservableList);
+        }
+        //rules
+        {
+            initDateBaseRules();
+            columnRulesId.setCellValueFactory(new PropertyValueFactory<Rule, Integer>("id"));
+            columnRulesName.setCellValueFactory(new PropertyValueFactory<Rule, String>("ruleName"));
+            tableRules.getSelectionModel().selectedItemProperty().addListener((observable, oldRule, rule) -> selectedRule(rule));
+            tableRules.setItems(rulesForRulesObservableList);
+        }
     }
-
-    public void initDataBase(){
-        DAO<User, Integer> DAOUser = new UserDAOimpl(factory);
-        List<User> users = DAOUser.findByAll();
-        userObservableList.addAll(users);
+//userRules
+    public void initDateBaseUserRule(){
+        factory = new Configuration().configure().buildSessionFactory();
+        DAO<UserRule, Integer> DAOUserRules = new UserRuleDAOimpl(factory);
+        List<UserRule> userRules = DAOUserRules.findByAll();
+        userRulesForUserRulesObservable.addAll(userRules);
         factory.close();
     }
+    public void selectedUserRule(UserRule userRule){
+        userRuleForUserRule = userRule;
+        System.out.println(userRule.toString());
+        userRuleId.setText(String.valueOf(userRule.getId()));
+        userRuleRuleName.setText(userRule.getRuleId().getRuleName());
+        userRuleUserFirstName.setText(userRule.getUserId().getFirstName());
+        userRuleUserLastName.setText(userRule.getUserId().getLastName());
+        userRuleRegDate.setText(String.format("%Td/%Tm/%Ty",userRule.getRegistrationDate(),userRule.getRegistrationDate(),userRule.getRegistrationDate()));
 
-    public void selected(User user) {
+    }
+//Rules
+    public void selectedRule(Rule rule){
+        factory =  new Configuration().configure().buildSessionFactory();
+        System.out.println(rule);
+        RuleIdText.setText(String.valueOf(rule.getId()));
+        ruleNameText.setText(rule.getRuleName());
+        usersForRulesObservableList.clear();
+       String sql = "";
+        Session session = factory.openSession();
+        Query query = session.createNativeQuery(sql);
+        System.out.println(query.getResultList());
+        User userForList = new User();
+        ruleUsersCombo.setItems(usersForRulesObservableList);
+    }
+    public void initDateBaseRules(){
+        factory =  new Configuration().configure().buildSessionFactory();
+        DAO<Rule, Integer> DAORules = new RuleDAOimpl(factory);
+        List<Rule> rules = DAORules.findByAll();
+        rulesForRulesObservableList.addAll(rules);
+        factory.close();
+    }
+//Users
+    public void selectedUser(User user) {
+        userOfUser = user;
         System.out.println(user.toString());
         idText.setText(String.valueOf(user.getId()));
         firstNameText.setText(user.getFirstName());
         lastNameText.setText(user.getLastName());
         dateObservableList.clear();
-        ruleObservableList.clear();
+        ruleForUserObservableList.clear();
         for (UserRule userRule:user.getUserRules()){
             dateObservableList.add(userRule.getRegistrationDate());
-            ruleObservableList.add(userRule.getRuleId());
+            ruleForUserObservableList.add(userRule.getRuleId());
         }
         regDateBox.setItems(dateObservableList);
-        rulesBox.setItems(ruleObservableList);
+        rulesBox.setItems(ruleForUserObservableList);
+    }
+    public void initDataBaseUser(){
+        factory =  new Configuration().configure().buildSessionFactory();
+        DAO<User, Integer> DAOUser = new UserDAOimpl(factory);
+        List<User> users = DAOUser.findByAll();
+        userObservableList.addAll(users);
+        factory.close();
     }
 }
